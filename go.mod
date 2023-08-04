@@ -3,6 +3,7 @@ module github.com/mapcuk/wisdom
 go 1.19
 
 require (
+	github.com/caarlos0/env v3.5.0+incompatible
 	github.com/caarlos0/env/v9 v9.0.0
 	github.com/stretchr/testify v1.8.1
 	go.uber.org/zap v1.25.0

@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  wisdom_server:
+    build:
+      context: .
+    image: wisdom:1.8
+    environment:
+      ADDR: "0.0.0.0:9000"
+    ports:
+      - '9000:9000'
+
+  client:
+    build:
+      context: .
+    environment:
+      ADDR: "wisdom_server:9000"
+    image: wisdom:1.8
+    command: /bin/wclient
+    restart: 'no'
+    depends_on:
+      - wisdom_server
