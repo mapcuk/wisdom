@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+
 	"github.com/mapcuk/wisdom/internal/log"
 	"github.com/mapcuk/wisdom/pkg/protocol"
 
@@ -22,7 +23,11 @@ func Start(ctx context.Context, addr string, zeros uint) error {
 	logger.Info("Start server", zap.String("addr", addr))
 
 	for {
-		// TODO ctx.Done()
+		select {
+		case <-ctx.Done():
+			return fmt.Errorf("context is Done")
+		default:
+		}
 		conn, err := listener.Accept()
 		if err != nil {
 			return fmt.Errorf("accept %v", err)

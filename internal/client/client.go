@@ -3,8 +3,10 @@ package client
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net"
 	"time"
+
 	"github.com/mapcuk/wisdom/internal/log"
 	"github.com/mapcuk/wisdom/pkg/protocol"
 
@@ -27,6 +29,12 @@ func GetSomeWisdom(ctx context.Context, address string) (string, error) {
 	timeout := 15 * time.Second
 	for {
 		conn.SetDeadline(time.Now().Add(timeout))
+		select {
+		case <-ctx.Done():
+			return "", fmt.Errorf("context is Done")
+		default:
+		}
+
 		msg, err := protocol.ReadMessage(conn)
 		if err != nil {
 			return "", err
